@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { AuthProvider } from "./lib/auth";
 
 export const metadata: Metadata = {
-  title: "Candidate Assessment Platform",
-  description: "Recruiter-driven candidate assessment with tenant isolation and Elasticsearch search"
+  title: "HireReady",
+  description: "Recruiter-driven candidate assessments"
 };
 
 export default function RootLayout({

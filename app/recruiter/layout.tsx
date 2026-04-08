@@ -40,7 +40,7 @@ export default function RecruiterLayout({ children }: { children: ReactNode }) {
       <nav className="sidebar">
         <div className="sidebar-top">
           <div className="sidebar-brand">
-            <span className="eyebrow">Assessment Platform</span>
+            <span className="sidebar-title">HireReady</span>
             {organizationName && <strong className="org-name">{organizationName}</strong>}
           </div>
           <ul className="nav-list">
@@ -61,9 +61,14 @@ export default function RecruiterLayout({ children }: { children: ReactNode }) {
             </li>
           </ul>
         </div>
-        <button className="button button--ghost nav-signout" onClick={handleSignOut} type="button">
-          Sign Out
-        </button>
+        <div className="sidebar-bottom">
+          <a className="nav-support" href="mailto:tusharrravindran@gmail.com">
+            Contact Support
+          </a>
+          <button className="button button--ghost nav-signout" onClick={handleSignOut} type="button">
+            Sign Out
+          </button>
+        </div>
       </nav>
       <main className="main-content">{children}</main>
     </div>

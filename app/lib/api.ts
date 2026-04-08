@@ -28,8 +28,15 @@ export async function apiFetch(
     ...(token ? { Authorization: token } : {}),
     ...((init.headers as Record<string, string>) ?? {})
   };
-  const res = await fetch(`${API_BASE}${path}`, { ...init, headers });
-  return res;
+  try {
+    const res = await fetch(`${API_BASE}${path}`, { ...init, headers });
+    return res;
+  } catch {
+    throw new ApiError(
+      "Cannot reach the server. It may be starting up — please wait a moment and try again.",
+      0
+    );
+  }
 }
 
 export async function apiRequest<T = unknown>(

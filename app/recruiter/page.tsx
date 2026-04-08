@@ -37,13 +37,14 @@ type ResultsResponse = {
   };
 };
 
-function pct(n: number) {
-  return `${(n ?? 0).toFixed(1)}%`;
+function pct(n: number | string | null | undefined) {
+  return `${Number(n ?? 0).toFixed(1)}%`;
 }
 
 export default function DashboardPage() {
   const { token } = useAuth();
   const [stats, setStats] = useState<Stats | null>(null);
+  const [assessmentList, setAssessmentList] = useState<Array<{ id: number; title: string }>>([]);
   const [results, setResults] = useState<Result[]>([]);
   const [facets, setFacets] = useState<ResultsResponse["facets"]>({});
   const [totalResults, setTotalResults] = useState(0);
@@ -79,7 +80,14 @@ export default function DashboardPage() {
   }, [token, q, assessmentId, passFail, completionStatus, selectedResult]);
 
   useEffect(() => {
+    if (!token) return;
     void load();
+    // Load assessment list for filter dropdown
+    apiRequest<{ assessments: Array<{ id: number; title: string }> }>(
+      "/assessments?per_page=100",
+      {},
+      token
+    ).then((d) => setAssessmentList(d.assessments)).catch(() => null);
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleReviewSave(detailId: number, scoreAwarded: number, reviewerNotes: string) {
@@ -154,6 +162,9 @@ export default function DashboardPage() {
           />
           <select onChange={(e) => setAssessmentId(e.target.value)} value={assessmentId}>
             <option value="">All assessments</option>
+            {assessmentList.map((a) => (
+              <option key={a.id} value={a.id}>{a.title}</option>
+            ))}
           </select>
           <select onChange={(e) => setPassFail(e.target.value)} value={passFail}>
             <option value="">All outcomes</option>
@@ -228,7 +239,7 @@ function ResultDrilldown({
         <p className="muted">{result.invitation.candidate_email}</p>
         <p>
           {result.assessment.title} ·{" "}
-          <strong>{(result.percentage ?? 0).toFixed(1)}%</strong> ·{" "}
+          <strong>{Number(result.percentage ?? 0).toFixed(1)}%</strong> ·{" "}
           <span className={result.passed ? "badge badge--pass" : "badge badge--fail"}>
             {result.passed ? "PASS" : "FAIL"}
           </span>

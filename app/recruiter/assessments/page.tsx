@@ -154,8 +154,8 @@ export default function AssessmentsPage() {
                 <span>Pass ≥ {a.passing_score}%</span>
                 <span>{a.total_invited} invited</span>
                 <span>{a.total_completed} completed</span>
-                <span>Avg {(a.average_score ?? 0).toFixed(1)}%</span>
-                <span>Pass rate {(a.pass_rate ?? 0).toFixed(1)}%</span>
+                <span>Avg {Number(a.average_score ?? 0).toFixed(1)}%</span>
+                <span>Pass rate {Number(a.pass_rate ?? 0).toFixed(1)}%</span>
               </div>
             </article>
           ))}

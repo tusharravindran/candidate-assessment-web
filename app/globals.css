@@ -434,17 +434,56 @@ input:focus, select:focus, textarea:focus {
 .option-preview li { font-size: 0.92rem; color: var(--muted); }
 .option-preview li.correct { color: #065f46; font-weight: 600; }
 
-.options-block { display: flex; flex-direction: column; gap: 10px; }
+.options-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
 
 .option-row-edit {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  width: 100%;
 }
 
-.option-row-edit input[type="text"],
-.option-row-edit input:not([type="radio"]) {
-  flex: 1;
+.option-row-edit input[type="radio"] {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--indigo);
+  cursor: pointer;
+}
+
+.option-row-edit input[type="text"] {
+  flex: 1 1 0%;
+  width: 0;        /* override global width:100% so flex:1 controls sizing */
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: #fff;
+  color: var(--text);
+  height: 38px;
+  box-sizing: border-box;
+}
+
+.option-row-edit input[type="text"]:focus {
+  outline: none;
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+}
+
+.option-row-edit input[type="text"]:disabled {
+  background: var(--surface);
+  color: var(--muted);
+  cursor: not-allowed;
 }
 
 /* ── Results / dashboard ─────────────────────────────── */
@@ -554,12 +593,18 @@ input:focus, select:focus, textarea:focus {
 .option-row {
   display: flex;
   gap: 10px;
-  align-items: center;
+  align-items: flex-start;
   padding: 12px 14px;
   border-radius: 14px;
   border: 1px solid var(--border);
   background: white;
   cursor: pointer;
+}
+
+.option-row input[type="radio"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: var(--indigo);
 }
 
 /* ── Invitations table ───────────────────────────────── */
@@ -569,6 +614,45 @@ table { width: 100%; border-collapse: collapse; }
 th { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
 th, td { padding: 12px 8px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
 tr:last-child td { border-bottom: none; }
+tr.row-clickable { cursor: pointer; }
+tr.row-clickable:hover td { background: var(--surface); }
+
+/* ── Tabs ────────────────────────────────────────────── */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab-btn:hover { color: var(--text); }
+.tab-btn--active { color: var(--indigo); border-bottom-color: var(--indigo); }
+
+/* ── Candidates layout ───────────────────────────────── */
+.candidates-layout {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 1024px) {
+  .candidates-layout {
+    grid-template-columns: 1fr 380px;
+    align-items: start;
+  }
+}
 
 /* ── Filters ─────────────────────────────────────────── */
 .filters {

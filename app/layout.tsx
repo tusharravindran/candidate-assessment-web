@@ -1,9 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { AuthProvider } from "./lib/auth";
 
 export const metadata: Metadata = {
-  title: "Candidate Assessment Web",
-  description: "Frontend shell for the candidate assessment platform"
+  title: "Candidate Assessment Platform",
+  description: "Recruiter-driven candidate assessment with tenant isolation and Elasticsearch search"
 };
 
 export default function RootLayout({
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

@@ -1,26 +1,23 @@
 import Link from "next/link";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/v1";
-
 export default function HomePage() {
   return (
     <main className="page">
       <section className="shell shell--hero">
         <div className="hero-copy">
           <span className="eyebrow">Candidate Assessment Platform</span>
-          <h1>Separate recruiter and candidate flows, one deployable full-stack build.</h1>
+          <h1>Recruit smarter with timed, tenant-isolated assessments.</h1>
           <p className="lede">
-            The frontend is wired to the Rails API through
-            <code> NEXT_PUBLIC_API_URL</code>. Use the recruiter workspace to inspect
-            tenant-scoped dashboards and the candidate route for invitation-driven test
-            sessions.
+            Create assessments, invite candidates via secure single-use links, auto-score
+            objective answers, and review free-text responses — all within your private
+            organization workspace.
           </p>
           <div className="actions">
             <Link className="button button--primary" href="/recruiter">
-              Open Recruiter Workspace
+              Recruiter Dashboard
             </Link>
-            <Link className="button button--ghost" href="/candidate/demo-token">
-              Preview Candidate Flow
+            <Link className="button button--ghost" href="/recruiter/signup">
+              Create Account
             </Link>
           </div>
         </div>
@@ -28,16 +25,20 @@ export default function HomePage() {
         <div className="hero-panel">
           <div className="stack">
             <div className="stat-card">
-              <span className="stat-label">API Endpoint</span>
-              <strong>{apiUrl}</strong>
+              <span className="stat-label">Recruiter Flow</span>
+              <strong>Create → Publish → Invite → Review</strong>
             </div>
             <div className="stat-card">
-              <span className="stat-label">Render Shape</span>
-              <strong>Rails API + Sidekiq worker + Next.js web</strong>
+              <span className="stat-label">Candidate Flow</span>
+              <strong>Token link → Timed session → Submit</strong>
             </div>
             <div className="stat-card">
-              <span className="stat-label">Local Infra</span>
-              <strong>Docker Compose with Postgres, Redis, Elasticsearch</strong>
+              <span className="stat-label">Backend</span>
+              <strong>Rails API · Sidekiq · Elasticsearch</strong>
+            </div>
+            <div className="stat-card">
+              <span className="stat-label">Tenant Isolation</span>
+              <strong>Row-level scoping + Pundit policies</strong>
             </div>
           </div>
         </div>

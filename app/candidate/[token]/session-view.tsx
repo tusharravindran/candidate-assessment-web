@@ -99,7 +99,7 @@ export function CandidateSessionView({ token }: { token: string }) {
     try {
       setError("");
       const response = await fetch(`${API_URL}/candidate/session/${token}`);
-      const nextPayload = (await readJson(response)) as CandidatePayload;
+      const nextPayload = (await readJson(response)) as CandidatePayload & { message?: string; error?: string };
 
       if (!response.ok) {
         throw new Error(nextPayload.message || nextPayload.error || "Unable to load invitation");

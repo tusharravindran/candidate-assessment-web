@@ -5,7 +5,7 @@ export default function HomePage() {
     <main className="page">
       <section className="shell shell--hero">
         <div className="hero-copy">
-          <span className="eyebrow">Candidate Assessment Platform</span>
+          <span className="eyebrow">HireReady</span>
           <h1>Recruit smarter with timed, tenant-isolated assessments.</h1>
           <p className="lede">
             Create assessments, invite candidates via secure single-use links, auto-score

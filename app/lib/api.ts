@@ -8,7 +8,7 @@ export class ApiError extends Error {
   }
 }
 
-async function parseResponse(res: Response) {
+export async function parseResponse(res: Response) {
   const text = await res.text();
   if (!text) return {};
   try {

@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode
 } from "react";
-import { apiFetch, apiRequest, ApiError } from "./api";
+import { apiFetch, apiRequest, ApiError, parseResponse } from "./api";
 
 const TOKEN_KEY = "ca_jwt";
 
@@ -52,11 +52,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         method: "POST",
         body: JSON.stringify({ recruiter: { email, password } })
       });
-      const data = await res.json();
+      const data = await parseResponse(res);
       if (!res.ok) throw new ApiError(data?.message || data?.error || "Sign in failed", res.status);
 
-      const jwt = res.headers.get("Authorization") || res.headers.get("authorization") || "";
-      if (!jwt) throw new Error("No token in response");
+      const jwt =
+        res.headers.get("Authorization") ||
+        res.headers.get("authorization") ||
+        data?.token ||
+        "";
+
+      if (!jwt) {
+        throw new ApiError(
+          data?.message ||
+            data?.error ||
+            "Authentication token missing in response. Check CORS expose for Authorization.",
+          res.status
+        );
+      }
 
       localStorage.setItem(TOKEN_KEY, jwt);
       setToken(jwt);
